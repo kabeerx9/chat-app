@@ -50,7 +50,6 @@ const handleClerkWebhook = httpAction(async (ctx, req) => {
 			});
 		default:
 			console.log(`Unhandled event type: ${event.type}`);
-
 			return new Response(null, { status: 200 });
 	}
 });
