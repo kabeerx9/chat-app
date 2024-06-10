@@ -4,10 +4,11 @@ import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
 import { useQuery } from 'convex/react';
 import { Loader } from 'lucide-react';
-import React from 'react';
+import React, { useState } from 'react';
 import Header from './_components/Header';
 import Body from './_components/body/Body';
 import ChatInput from './_components/input/ChatInput';
+import RemoveFriendDialog from './_components/diialogs/RemoveFriendDialog';
 
 type Props = {
 	params: {
@@ -16,6 +17,11 @@ type Props = {
 };
 
 const ConversationPage = ({ params: { conversationId } }: Props) => {
+	const [removeFriendDialogOpen, setRemoveFriendDialogOpen] = useState(false);
+	const [deleteGroupDialogOpen, setDeleteGroupDialogOpen] = useState(false);
+	const [leaveGroupDialogOpen, setLeaveGroupDialogOpen] = useState(false);
+	const [callType, setCallType] = useState<'audio' | 'video' | null>(null);
+
 	const conversation = useQuery(api.conversation.get, {
 		id: conversationId,
 	});
@@ -29,6 +35,11 @@ const ConversationPage = ({ params: { conversationId } }: Props) => {
 		</p>
 	) : (
 		<ConversationContainer>
+			<RemoveFriendDialog
+				conversationId={conversationId}
+				open={removeFriendDialogOpen}
+				setOpen={setRemoveFriendDialogOpen}
+			/>
 			<Header
 				imageUrl={
 					(conversation.isGroup
@@ -39,6 +50,28 @@ const ConversationPage = ({ params: { conversationId } }: Props) => {
 					(conversation.isGroup
 						? conversation.name
 						: conversation.otherMember.username) || ''
+				}
+				options={
+					conversation.isGroup
+						? [
+								{
+									label: 'Leave Group',
+									destructive: false,
+									onClick: () => setLeaveGroupDialogOpen(true),
+								},
+								{
+									label: 'Delete Group',
+									destructive: true,
+									onClick: () => setDeleteGroupDialogOpen(true),
+								},
+							]
+						: [
+								{
+									label: 'Remove Friend',
+									destructive: true,
+									onClick: () => setRemoveFriendDialogOpen(true),
+								},
+							]
 				}
 			/>
 			<Body />
