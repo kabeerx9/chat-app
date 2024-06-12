@@ -19,6 +19,8 @@ type Props = {
 };
 
 const ConversationPage = ({ params: { conversationId } }: Props) => {
+	console.log('CONVERSATION PAGE');
+
 	const [removeFriendDialogOpen, setRemoveFriendDialogOpen] = useState(false);
 	const [deleteGroupDialogOpen, setDeleteGroupDialogOpen] = useState(false);
 	const [leaveGroupDialogOpen, setLeaveGroupDialogOpen] = useState(false);

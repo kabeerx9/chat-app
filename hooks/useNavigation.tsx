@@ -17,6 +17,14 @@ export const useNavigation = () => {
 
 	const requestsCount = useQuery(api.requests.count);
 
+	const conversations = useQuery(api.conversations.get);
+
+	const unseenMessageCount = useMemo(() => {
+		return conversations?.reduce((acc, conversation) => {
+			return acc + conversation.unseenCount;
+		}, 0);
+	}, [conversations]);
+
 	const paths = useMemo(
 		() => [
 			{
@@ -24,6 +32,7 @@ export const useNavigation = () => {
 				href: '/conversations',
 				icon: <MessageSquare />,
 				active: pathname.startsWith('/conversations'),
+				count: unseenMessageCount,
 			},
 			{
 				name: 'Friends',
@@ -33,7 +42,7 @@ export const useNavigation = () => {
 				count: requestsCount,
 			},
 		],
-		[pathname, requestsCount]
+		[pathname, requestsCount, unseenMessageCount]
 	);
 
 	return paths;

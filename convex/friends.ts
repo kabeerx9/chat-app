@@ -1,8 +1,6 @@
-import { ConvexError, v } from 'convex/values';
-import { mutation, query } from './_generated/server';
+import { ConvexError } from 'convex/values';
+import { query } from './_generated/server';
 import { getUserByClerkId } from './_utils';
-import { QueryCtx, MutationCtx } from './_generated/server';
-import { Id } from './_generated/dataModel';
 export const get = query({
 	args: {},
 	handler: async (ctx, args) => {

@@ -3,7 +3,7 @@ import ItemList from '@/components/shared/item-list/ItemList';
 import { api } from '@/convex/_generated/api';
 import { useQuery } from 'convex/react';
 import { Loader2 } from 'lucide-react';
-import React from 'react';
+import React, { useMemo } from 'react';
 import DMConversationItem from './_components/DMConversationItem';
 import CreateGroupDialog from './_components/CreateGroupDialog';
 import GroupConversationItem from './_components/GroupConversationItem';
@@ -12,6 +12,7 @@ type Props = React.PropsWithChildren<{}>;
 
 const ConversationsLayout = ({ children }: Props) => {
 	const conversations = useQuery(api.conversations.get);
+
 	return (
 		<>
 			<ItemList title="Conversations" action={<CreateGroupDialog />}>
@@ -22,6 +23,8 @@ const ConversationsLayout = ({ children }: Props) => {
 						</p>
 					) : (
 						conversations.map((conversation) => {
+							const unseenMessageCount = conversation.unseenCount;
+
 							return conversation.conversation.isGroup ? (
 								<GroupConversationItem
 									key={conversation.conversation._id}
@@ -29,6 +32,7 @@ const ConversationsLayout = ({ children }: Props) => {
 									name={conversation.conversation.name || ''}
 									lastMessageContent={conversation?.lastMessage?.content}
 									lastMessageSender={conversation?.lastMessage?.sender}
+									unseenCount={unseenMessageCount}
 								/>
 							) : (
 								<DMConversationItem
@@ -38,6 +42,7 @@ const ConversationsLayout = ({ children }: Props) => {
 									username={conversation.otherMember?.username || ''}
 									lastMessageContent={conversation?.lastMessage?.content}
 									lastMessageSender={conversation?.lastMessage?.sender}
+									unseenCount={unseenMessageCount}
 								/>
 							);
 						})
