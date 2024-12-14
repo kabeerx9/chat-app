@@ -61,7 +61,7 @@ export default function LandingPage() {
           transition={{ delay: 0.6 }}
         >
           <a
-            href="https://github.com/kabeerjoshi"
+            href="https://github.com/kabeerx9"
             target="_blank"
             rel="noopener noreferrer"
             className="text-3xl hover:text-blue-400 transition-colors"
@@ -69,7 +69,7 @@ export default function LandingPage() {
             <FaGithub />
           </a>
           <a
-            href="https://linkedin.com/in/kabeerjoshi"
+            href="https://www.linkedin.com/in/kabeer-joshi-7173061aa/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-3xl hover:text-blue-400 transition-colors"
