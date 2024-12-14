@@ -4,10 +4,23 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@clerk/nextjs';
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { useLayoutEffect } from 'react';
+import { Loader } from 'lucide-react';
+import LoadingLogo from '@/components/shared/LoadingLogo';
 
 export default function LandingPage() {
   const router = useRouter();
   const { isSignedIn } = useAuth();
+
+  useLayoutEffect(()=>{
+    if (isSignedIn) {
+      router.push('/conversations');
+    }
+  },[isSignedIn])
+
+  if(isSignedIn === null || isSignedIn === undefined){
+    return <LoadingLogo/>
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white flex flex-col items-center justify-center p-4">
