@@ -9,6 +9,7 @@ import {
 	Unauthenticated,
 } from 'convex/react';
 import { ConvexProviderWithClerk } from 'convex/react-clerk';
+import { usePathname } from 'next/navigation';
 import React from 'react';
 
 type Props = {
@@ -20,16 +21,25 @@ const CONVEX_URL = process.env.NEXT_PUBLIC_CONVEX_URL!;
 const convex = new ConvexReactClient(CONVEX_URL);
 
 const ConvexClientProvider = ({ children }: Props) => {
+	const pathname = usePathname();
+	const isRootRoute = pathname === '/';
+
 	return (
 		<ClerkProvider>
 			<ConvexProviderWithClerk client={convex} useAuth={useAuth}>
-				<Authenticated>{children}</Authenticated>
-				<AuthLoading>
-					<LoadingLogo />
-				</AuthLoading>
-				{/* <Unauthenticated>
-					<SignIn />
-				</Unauthenticated> */}
+				{isRootRoute ? (
+					children
+				) : (
+					<>
+						<Authenticated>{children}</Authenticated>
+						<AuthLoading>
+							<LoadingLogo />
+						</AuthLoading>
+						<Unauthenticated>
+							<SignIn routing="hash" path="/sign-in" />
+						</Unauthenticated>
+					</>
+				)}
 			</ConvexProviderWithClerk>
 		</ClerkProvider>
 	);
