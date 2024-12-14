@@ -50,7 +50,7 @@ const MobileNav = () => {
 						<ThemeToggle />
 					</li>
 					<li>
-						<UserButton />
+						<UserButton afterSignOutUrl='/' />
 					</li>
 				</ul>
 			</nav>

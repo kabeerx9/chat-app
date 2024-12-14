@@ -25,7 +25,7 @@ const ConvexClientProvider = ({ children }: Props) => {
 	const isRootRoute = pathname === '/';
 
 	return (
-		<ClerkProvider>
+		<ClerkProvider >
 			<ConvexProviderWithClerk client={convex} useAuth={useAuth}>
 				{isRootRoute ? (
 					children
@@ -36,7 +36,7 @@ const ConvexClientProvider = ({ children }: Props) => {
 							<LoadingLogo />
 						</AuthLoading>
 						<Unauthenticated>
-							<SignIn routing="hash" path="/sign-in" />
+							<SignIn routing="hash"  />
 						</Unauthenticated>
 					</>
 				)}
